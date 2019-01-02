@@ -67,6 +67,28 @@ public class UserServlet extends BaseServlet {
 		req.setAttribute("msg", "用户注册成功,请去邮箱激活");
 		return "/jsp/msg.jsp";
 	}
+	/**
+	 * 用户激活
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception 
+	 */
+	public String active(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//获取激活码
+		String code = request.getParameter("code");
+		//调用service完成激活
+		UserService s=new UserServiceImpl();
+		User user=s.active(code);
+		if (user==null) {
+			request.setAttribute("msg", "请重新激活");
+		}else {
+			//添加信息
+			request.setAttribute("msg", "激活成功");
+		}
+		//请求转发
+		return "/jsp/msg.jsp";
+	}
    
    
 }
